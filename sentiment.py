@@ -1,12 +1,19 @@
 import requests
 import json
 from flask import Flask, request, jsonify
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_llm = os.getenv("API_LLM")
+api_key = os.getenv("API_KEY")
 
 app = Flask(__name__)
 
 def model_ai(text_input, classification=["positive", "neutral", "negative"]):
 
-    url = "https://ai-api.manageai.co.th/llm-model-04/v1/chat/completions"
+    url = api_llm
 
 
     payload = json.dumps({
@@ -55,7 +62,7 @@ def model_ai(text_input, classification=["positive", "neutral", "negative"]):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': "Basic bWFuYWdlYWkyMDI0Ok1hbmFnZUFJQDIwMjQ=",
+        'Authorization': f"Basic {api_key}",
         'Cookie': 'Path=/'
     }
 

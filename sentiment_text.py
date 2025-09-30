@@ -2,13 +2,20 @@ from flask import Flask, request, jsonify, Response
 import requests
 import re
 import json
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_llm = os.getenv("API_LLM")
+api_key = os.getenv("API_KEY")
 
 app = Flask(__name__)
 
 # การตั้งค่าการเชื่อมต่อ API LLM
-MAI_LLM_url = "https://ai-api.manageai.co.th/llm-vl-model-01/v1/chat/completions"
+MAI_LLM_url = api_llm
 headers = {"Content-Type": "application/json",
-            "Authorization": "Basic bWFuYWdlYWkyMDI0Ok1hbmFnZUFJQDIwMjQ=",
+            "Authorization": f"Basic {api_key}",
             "Cookie": "Path=/"}
 
 # ฟังก์ชันสำหรับส่งข้อความไปยัง LLM API เพื่อทำ Sentiment Analysis
